@@ -15,6 +15,8 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MainListItems from "../../components/ListItems";
 import Data from "./components/Data";
+import Admin from "./components/Admin";
+
 import LogoutIcon from "@mui/icons-material/Logout";
 
 const drawerWidth: number = 240;
@@ -162,7 +164,7 @@ function DashboardContent() {
           }}
         >
           <Toolbar />
-          {activeMenuItem == 0 ? <Data /> : <></>}
+          {activeMenuItem == 0 ? <Data /> : <Admin />}
         </Box>
       </Box>
     </ThemeProvider>
