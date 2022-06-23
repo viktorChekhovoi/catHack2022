@@ -53,7 +53,8 @@ export default function SignInSide() {
           sm={4}
           md={7}
           sx={{
-            backgroundImage: "url(https://content.fortune.com/wp-content/uploads/2020/05/F500-2020-062-Caterpillar.jpg?resize=850,566)",
+            backgroundImage:
+              "url(https://content.fortune.com/wp-content/uploads/2020/05/F500-2020-062-Caterpillar.jpg?resize=850,566)",
             backgroundRepeat: "no-repeat",
             backgroundColor: (t) =>
               t.palette.mode === "light"
@@ -66,45 +67,62 @@ export default function SignInSide() {
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
           <Box
             sx={{
-              my: 8,
-              mx: 4,
               display: "flex",
               flexDirection: "column",
-              alignItems: "center",
+              justifyContent: "center",
+              height: "100%",
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: "#ffc107" }}>
-              <LockOutlinedIcon />
-            </Avatar>
-            <Typography component="h1" variant="h5">
-              Email Verification
-            </Typography>
             <Box
-              component="form"
-              noValidate
-              onSubmit={handleSubmit}
-              sx={{ mt: 1 }}
+              sx={{
+                my: 8,
+                mx: 4,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                pb: 20,
+              }}
             >
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-                autoFocus
-              />
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2, bgcolor: "#ffc107"}}
-              
+              <Avatar sx={{ m: 1, bgcolor: "#ffc107" }}>
+                <LockOutlinedIcon />
+              </Avatar>
+              <Typography component="h1" variant="h5">
+                Email Verification
+              </Typography>
+              <Box
+                component="form"
+                noValidate
+                onSubmit={handleSubmit}
+                sx={{ mt: 1 }}
               >
-                Verify Me
-              </Button>
-              <Copyright sx={{ mt: 5 }} />
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                  autoFocus
+                />
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{
+                    mt: 3,
+                    mb: 2,
+                    bgcolor: "#ffc107",
+                    "&:hover": {
+                      backgroundColor: "#fff",
+                      color: "#3c52b2",
+                    },
+                  }}
+                >
+                  Verify Me
+                </Button>
+                <Copyright sx={{ mt: 5 }} />
+              </Box>
             </Box>
           </Box>
         </Grid>
