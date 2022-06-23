@@ -32,7 +32,7 @@ function Copyright(props: any) {
     >
       {"Copyright © "}
       <Link color="inherit" href="https://mui.com/">
-        Your Website
+        Nioh
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}
