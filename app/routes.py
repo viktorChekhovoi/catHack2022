@@ -3,20 +3,32 @@ from flask_mail import *
 from app import app
 from random import *
 
-EMAIL_PATTERN = "/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/"
+
+app.config["MAIL_SERVER"]='smtp.gmail.com'  
+app.config["MAIL_PORT"] = 465      
+app.config["MAIL_USERNAME"] = 'cathack.notification@gmail.com'
+app.config['MAIL_PASSWORD'] = 'wjbdsvjkndsntrkw' 
+app.config['MAIL_USE_TLS'] = False  
+app.config['MAIL_USE_SSL'] = True  
+
+mail = Mail(app)  
+otp = randint(100000,999999)
+
 @app.route('/')
 @app.route('/index', methods=['POST'])
 def index():
-    otp = randint(0,999999)   
     if 'otp' in request.form:
         user_otp = request.form['otp']
         if user_otp == otp:
-            return render_template('dashboard.html')
+            return render_template('data_access.html')
         else:
-            return render_template('index.html', pattern=EMAIL_PATTERN, status = 'wrong otp')
-    if 'email' in request.form:
-        return render_template('index.html', pattern=EMAIL_PATTERN, status = 'email received')
+            return render_template('index.html', status = 'wrong otp')
+    if 'email' in request.form:  
+        msg = Message('OTP',sender = 'username@gmail.com', recipients = [request.form['email']])  
+        msg.body = str(otp)  
+        mail.send(msg)  
+        return render_template('index.html', status = 'waiting for otp')
     else:
-        return render_template('index.html', pattern=EMAIL_PATTERN, status = 'waiting for email')
+        return render_template('index.html', status = 'waiting for email')
 
 
