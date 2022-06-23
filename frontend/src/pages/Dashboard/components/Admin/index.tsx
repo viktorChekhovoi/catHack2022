@@ -19,7 +19,7 @@ import { render } from "@testing-library/react";
 
 interface adminProps {}
 
-const steps = ["Shipping address", "Payment details", "Review your order"];
+const steps = ["User Info", "Access Details"];
 
 function getStepContent(step: number) {
   switch (step) {
@@ -57,9 +57,9 @@ export default function Admin(props: adminProps) {
             sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}
           >
             <Typography component="h1" variant="h4" align="center">
-              Checkout
+              Admin Panel
             </Typography>
-            <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
+            <Stepper activeStep={activeStep} color="yellow" sx={{ pt: 3, pb: 5 }}>
               {steps.map((label) => (
                 <Step key={label}>
                   <StepLabel>{label}</StepLabel>
@@ -70,13 +70,11 @@ export default function Admin(props: adminProps) {
               {activeStep === steps.length ? (
                 <React.Fragment>
                   <Typography variant="h5" gutterBottom>
-                    Thank you for your order.
-                  </Typography>
-                  <Typography variant="subtitle1">
-                    Your order number is #2001539. We have emailed your order
-                    confirmation, and will send you an update when your order
-                    has shipped.
-                  </Typography>
+                    Thank you for your request!
+                </Typography>
+                <Typography variant="subtitle1">
+                    The authorizations are now activated.
+                </Typography>
                 </React.Fragment>
               ) : (
                 <React.Fragment>
@@ -92,7 +90,7 @@ export default function Admin(props: adminProps) {
                       onClick={handleNext}
                       sx={{ mt: 3, ml: 1 }}
                     >
-                      {activeStep === steps.length - 1 ? "Place order" : "Next"}
+                      {activeStep === steps.length - 1 ? "Activate" : "Next"}
                     </Button>
                   </Box>
                 </React.Fragment>
