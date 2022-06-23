@@ -1,8 +1,9 @@
 from boto3 import client, resource
+from decouple import config
 
-AWS_ACCESS_KEY_ID     = "AKIAZQPIPR67ETFIMMEG"
-AWS_SECRET_ACCESS_KEY = "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"
-REGION_NAME           = "us-east-1"
+AWS_ACCESS_KEY_ID     = config("AWS_ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY = config("AWS_SECRET_ACCESS_KEY")
+REGION_NAME           = config("REGION_NAME")
 
 client = client(
     'dynamodb',
