@@ -112,24 +112,6 @@ function DashboardContent() {
               Dashboard
             </Typography>
 
-            <Button
-              href="#"
-              variant="outlined"
-              sx={{
-                borderWidth: "2px",
-                my: 1,
-                mx: 1.5,
-                mr: "50px",
-              }}
-            >
-              Log out
-            </Button>
-
-            {/* <IconButton color="inherit">
-              <Badge badgeContent={0} color="secondary">
-                <LogoutIcon />
-              </Badge>
-            </IconButton> */}
           </Toolbar>
         </AppBar>
         <Drawer variant="permanent" open={open}>
