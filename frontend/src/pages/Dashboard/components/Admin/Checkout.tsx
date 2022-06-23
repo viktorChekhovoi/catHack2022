@@ -16,11 +16,7 @@ import AddressForm from './AddressForm';
 import PaymentForm from './PaymentForm';
 import Review from './Review';
 
-interface adminProps {}
-
-export default function Admin(props: adminProps) {
-  return <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-    function Copyright() {
+function Copyright() {
   return (
     <Typography variant="body2" color="text.secondary" align="center">
       {'Copyright © '}
@@ -128,7 +124,4 @@ export default function Checkout() {
       </Container>
     </ThemeProvider>
   );
-}
-
-  </Container>;
 }
