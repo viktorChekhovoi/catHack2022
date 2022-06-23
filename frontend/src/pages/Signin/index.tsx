@@ -12,6 +12,15 @@ import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import MuiAlert, { AlertProps } from "@mui/material/Alert";
+import httpClient from "../../httpClient";
+
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+  props,
+  ref
+) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 function Copyright(props: any) {
   return (
@@ -42,6 +51,26 @@ export default function SignInSide() {
       password: data.get("password"),
     });
   };
+  const [openSent, setOpenSent] = React.useState(true);
+  const [openError, setOpenError] = React.useState(true);
+  const [email, setEmail] = React.useState<string>("");
+
+  const [sent, setSent] = React.useState(true);
+  const [error, setError] = React.useState(true);
+
+  const logInUser = async () => {
+    try {
+      const resp = await httpClient.post("//localhost:5000/login", {
+        email,
+      });
+
+      window.location.href = "/";
+    } catch (error: any) {
+      if (error.response.status === 401) {
+        alert("Invalid credentials");
+      }
+    }
+  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -66,12 +95,14 @@ export default function SignInSide() {
         />
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
           <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              height: "100%",
-            }}
+            sx={
+              {
+                // display: "flex",
+                // flexDirection: "column",
+                // justifyContent: "center",
+                // height: "100%",
+              }
+            }
           >
             <Box
               sx={{
@@ -81,6 +112,7 @@ export default function SignInSide() {
                 flexDirection: "column",
                 alignItems: "center",
                 pb: 20,
+                pt: 20,
               }}
             >
               <Avatar sx={{ m: 1, bgcolor: "#ffc107" }}>
@@ -93,8 +125,36 @@ export default function SignInSide() {
                 component="form"
                 noValidate
                 onSubmit={handleSubmit}
-                sx={{ mt: 1 }}
+                sx={{
+                  mt: 1,
+                }}
               >
+                {openSent ? (
+                  <Alert
+                    onClose={() => {
+                      setOpenSent(false);
+                    }}
+                    severity="success"
+                    sx={{ width: "100%" }}
+                  >
+                    Email verification sent!
+                  </Alert>
+                ) : (
+                  <></>
+                )}
+                {openError ? (
+                  <Alert
+                    onClose={() => {
+                      setOpenError(false);
+                    }}
+                    severity="error"
+                    sx={{ width: "100%" }}
+                  >
+                    Incorrect Verification Code!
+                  </Alert>
+                ) : (
+                  <></>
+                )}
                 <TextField
                   margin="normal"
                   required
@@ -104,7 +164,20 @@ export default function SignInSide() {
                   name="email"
                   autoComplete="email"
                   autoFocus
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="code"
+                  label="Verification Code"
+                  name="Code"
+                  autoComplete=""
+                  autoFocus
+                />
+
                 <Button
                   type="submit"
                   fullWidth
