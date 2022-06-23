@@ -1,7 +1,8 @@
-from flask import redirect, render_template, request
+from flask import jsonify, redirect, render_template, request
 from flask_mail import *
 from app import app
 from random import *
+from validate_email_address import validate_email
 
 
 app.config["MAIL_SERVER"]='smtp.gmail.com'  
@@ -14,27 +15,39 @@ app.config['MAIL_USE_SSL'] = True
 mail = Mail(app)  
 otp = randint(100000,999999)
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
 def index():
     if 'otp' in request.form:
-        user_otp = request.form['otp']
-        print('The OTP is: ', otp)
-        print('User OTP is: ', user_otp)
-        if int(user_otp) == otp:
-            return render_template('data_access.html')
-        else: return render_template('index.html', status = 'wrong otp')
+        userOtp = request.form['otp']
+        if int(userOtp) == otp:
+            return jsonify({
+                'status': 'authenticated'
+            })
+        else: 
+            return jsonify({
+                'status': 'wrong_otp'
+            })
     if 'email' in request.form:  
-        msg = Message('OTP',sender = 'username@gmail.com', recipients = [request.form['email']])  
-        msg.body = str(otp)  
-        mail.send(msg)  
-        print('The OTP is:', otp)
-        return render_template('index.html', status = 'waiting for otp')
+        userEmail = request.form['email']
+        if validate_email(userEmail, verify=True):
+            msg = Message('OTP',sender = 'username@gmail.com', recipients = [request.form['email']])  
+            msg.body = str(otp)  
+            mail.send(msg)  
+            return jsonify({
+                'status': 'requested_otp'
+            })
+        else:
+            return jsonify({
+                'status': 'invalid_email'
+            })
     else:
-        return render_template('index.html', status = 'waiting for email')
+        return jsonify({
+            'status': 'requested_email'
+        })
 
-@app.route('/dashboard', methods=['POST'])
+@app.route('/dash', methods=['POST'])
 def dashboard():
-    return redirect('/index')
+    return jsonify({})
 
 
