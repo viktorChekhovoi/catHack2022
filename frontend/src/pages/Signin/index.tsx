@@ -43,14 +43,6 @@ function Copyright(props: any) {
 const theme = createTheme();
 
 export default function SignInSide() {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
-  };
   const [openSent, setOpenSent] = React.useState(true);
   const [openError, setOpenError] = React.useState(true);
   const [email, setEmail] = React.useState<string>("");
@@ -64,12 +56,22 @@ export default function SignInSide() {
         email,
       });
 
-      window.location.href = "/";
+      window.location.href = "/dash";
     } catch (error: any) {
       if (error.response.status === 401) {
         alert("Invalid credentials");
       }
     }
+  };
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    console.log({
+      email: data.get("email"),
+      password: data.get("password"),
+    });
+    logInUser();
   };
 
   return (
