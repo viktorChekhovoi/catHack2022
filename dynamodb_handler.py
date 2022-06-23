@@ -20,6 +20,7 @@ resource = resource(
 )
 
 UserTable = resource.Table('user-table')
+datalog = resource.Table('login-timestamp-table')
 
 def addUser(email, company, password, role):
 
@@ -104,3 +105,26 @@ def DeleteUser(email):
     )
 
     return response
+
+def updatelog(email, timestamp):
+
+    response = datalog.put_item(
+        Item = {
+            'email'     : email,
+            'timestamp'  : timestamp
+        }
+    )
+
+def getlog(email):
+
+    response = datalog.get_item(
+        Key = {
+            'email'     : email
+        },
+        AttributesToGet=[
+            'email', 'timestamp'
+        ]
+    )
+
+    return response
+
