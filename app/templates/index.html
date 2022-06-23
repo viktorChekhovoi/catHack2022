@@ -5,29 +5,29 @@
         </title>
     </head>
     <body>
-        {% if status == 'waiting for email' %}
+        {% if status == 'waiting for otp' %}
+        <h1>Sign In</h1>
+        <p>Data Access Request for Customers</p>
+        <p>A One-Time Password was sent to you email.</p>
+        <form action = "/index" method="post">
+            <label for="number">Please enter your OTP:</label>
+            <input type="number" name="otp" max="999999"> <br>
+            <input type="submit" value="Send OTP">
+        </form>
+
+        {% else %}
         <h1>Sign In</h1>
         <p>Data Access Request for Customers</p>
         {% if status == 'wrong otp' %}
-        <p color="red">Wrong OTP. Please try again.</p>
+        <p><div color="red">Wrong OTP. Please try again.</div></p>
         {% endif %}
         <p>Enter your company email. You will receive a One-Time Password (OTP) to confirm your email.</p>
-        <form action = "http://localhost:5000/index" method="post">
+        <form action = "/index" method="post">
             <label for="email">Please enter your work email:</label>
             <input type="email" name="email" required> <br>
             <input type="submit" value="Send OTP">
         </form>
         {% endif %}
 
-        {% if status == 'waiting for otp' %}
-        <h1>Sign In</h1>
-        <p>Data Access Request for Customers</p>
-        <p>A One-Time Password was sent to you email.</p>
-        <form action = "http://localhost:5000/index" method="post">
-            <label for="number">Please enter your OTP:</label>
-            <input type="number" name="otp" max="999999"> <br>
-            <input type="submit" value="Send OTP">
-        </form>
-        {% endif %}
     </body>
 </html>
