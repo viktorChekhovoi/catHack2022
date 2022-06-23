@@ -1,4 +1,4 @@
-from flask import render_template, request
+from flask import redirect, render_template, request
 from flask_mail import *
 from app import app
 from random import *
@@ -15,20 +15,26 @@ mail = Mail(app)
 otp = randint(100000,999999)
 
 @app.route('/')
-@app.route('/index', methods=['POST'])
+@app.route('/index', methods=['GET', 'POST'])
 def index():
     if 'otp' in request.form:
         user_otp = request.form['otp']
-        if user_otp == otp:
+        print('The OTP is: ', otp)
+        print('User OTP is: ', user_otp)
+        if int(user_otp) == otp:
             return render_template('data_access.html')
-        else:
-            return render_template('index.html', status = 'wrong otp')
+        else: return render_template('index.html', status = 'wrong otp')
     if 'email' in request.form:  
         msg = Message('OTP',sender = 'username@gmail.com', recipients = [request.form['email']])  
         msg.body = str(otp)  
         mail.send(msg)  
+        print('The OTP is:', otp)
         return render_template('index.html', status = 'waiting for otp')
     else:
         return render_template('index.html', status = 'waiting for email')
+
+@app.route('/dashboard', methods=['POST'])
+def dashboard():
+    return redirect('/index')
 
 
