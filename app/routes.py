@@ -1,4 +1,4 @@
-from flask import jsonify, redirect, render_template, request
+from flask import redirect, render_template, request
 from flask_mail import *
 from app import app
 from random import *
