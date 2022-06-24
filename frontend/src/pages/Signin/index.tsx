@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useEffect, useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -14,6 +14,7 @@ import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import httpClient from "../../httpClient";
+import axios from "axios";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -43,16 +44,27 @@ function Copyright(props: any) {
 const theme = createTheme();
 
 export default function SignInSide() {
-  const [openSent, setOpenSent] = React.useState(true);
-  const [openError, setOpenError] = React.useState(true);
+  const [openSent, setOpenSent] = React.useState(false);
+  const [openError, setOpenError] = React.useState(false);
   const [email, setEmail] = React.useState<string>("");
 
-  const [sent, setSent] = React.useState(true);
-  const [error, setError] = React.useState(true);
+  const [sent, setSent] = React.useState(false);
+  const [error, setError] = React.useState(false);
+
+  useEffect(() => {
+    axios
+      .post("http://localhost:5000/index", { email: "test" })
+      .then((response) => {
+        console.log("SUCCESS", response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
 
   const logInUser = async () => {
     try {
-      const resp = await httpClient.post("//localhost:5000/login", {
+      const resp = await httpClient.post("//localhost:5000/index", {
         email,
       });
 
@@ -61,6 +73,7 @@ export default function SignInSide() {
       if (error.response.status === 401) {
         alert("Invalid credentials");
       }
+      console.log("ERROR");
     }
   };
 
