@@ -19,7 +19,7 @@ import { render } from "@testing-library/react";
 
 interface adminProps {}
 
-const steps = ["User Info", "Access Details"];
+const steps = ["User Info", "Access Role", "Access Details"];
 
 function getStepContent(step: number) {
   switch (step) {
